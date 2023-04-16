@@ -1,7 +1,6 @@
 // Declare variables
 // Date & Time variables
 let Today = $('#CurrentDay');
-let Time = $('#CurrentTime')
 // Save button
 let SaveBtn = $('.saveBtn')
 // Delete button
@@ -56,24 +55,23 @@ $(function () {
     })
   }
 
-  // TODO: Add code to get any user input that was saved in localStorage and set
-  // the values of the corresponding textarea elements. HINT: How can the id
-  // attribute of each time-block be used to do this?
+  // Display the text the user saved on its corresponding time block
+  TimeBlock.each(function() {
+    const Key = $(this).attr('id');
+    const Value = localStorage.getItem(Key);
+    $(this).children('textarea').val(Value);
+  })
 
-TimeBlock.each(function() {
-  const Key = $(this).attr('id');
-  const Value = localStorage.getItem(Key);
-  $(this).children('.descripton').val(Value)
+  // When user clicks on "Clear Schedule", localStoage is cleared and page refreshes
+DeleteBtn.on('click', function() {
+  localStorage.clear();
+  location.reload();
 })
 
-  // TODO: Add event listener to erase all records from localStorage
+// Display the current date in the header of the page
+Today.text(dayjs().format('dddd, MMMM DD[th] | h:mm A'));
 
-
-// Add code to display the current date in the header of the page.
-Today.text(dayjs().format('dddd, MMMM DD[th]'));
-Time.text(dayjs().format('HH:ss'))
-
-SaveText()
-SetTimeFormat()
-RefreshFormat()
+SaveText();
+SetTimeFormat();
+RefreshFormat();
 });
